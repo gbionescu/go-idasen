@@ -92,7 +92,7 @@ func (desk *deskData) getFav(name string) (float64, error) {
 func getSettingsPath() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
-		fmt.Errorf("Error getting home path ", err)
+		printExit("Error getting home path "+err.Error(), 2)
 	}
 
 	return home + dataPath
