@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/binary"
-	"fmt"
 	"log"
 	"math"
 
@@ -39,12 +38,6 @@ func newDeskDriver(a ble.BLEConnector) *deskDriver {
 
 // Connection returns the Driver's Connection to the associated Adaptor
 func (b *deskDriver) Connection() gobot.Connection { return b.connection }
-
-// Name returns the Driver name
-func (b *deskDriver) Name() string { return b.name }
-
-// SetName sets the Driver name
-func (b *deskDriver) SetName(n string) { b.name = n }
 
 // adaptor returns BLE adaptor
 func (b *deskDriver) adaptor() ble.BLEConnector {
@@ -102,7 +95,6 @@ func (b *deskDriver) move(position float64) {
 		crtPosition := b.getPosition()
 		// If current position is within range, break - we're done
 		if math.Abs(crtPosition-position) <= positionDiff {
-			fmt.Println("BYE")
 			return
 		} else if crtPosition < position {
 			b.moveUp()
