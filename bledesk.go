@@ -4,13 +4,19 @@ import (
 	"encoding/binary"
 	"log"
 	"math"
+	"time"
 
 	"gobot.io/x/gobot"
 	"gobot.io/x/gobot/platforms/ble"
 )
 
+// This is the desks minimum height
 const baseHeight = 63.00
+// Absolute difference between desired height and current height
+// used when moving the desk.
 const positionDiff = 1.0
+// Interval to sleep between issuing command and measuring the position
+const sleepInterval = 500 * time.Millisecond
 
 const deskBLEPosition = "99fa0021-338a-1024-8a49-009c0215f78a"
 const deskBleControl = "99fa0002-338a-1024-8a49-009c0215f78a"
@@ -101,5 +107,7 @@ func (b *deskDriver) move(position float64) {
 		} else if crtPosition >= position {
 			b.moveDown()
 		}
+		// Wait for a bit
+		time.Sleep(sleepInterval)
 	}
 }
